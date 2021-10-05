@@ -74,18 +74,28 @@ namespace CanetisRadar
                 Environment.Exit(-1);
             }
 
+            const int history = 100;
+            float[] leftTop = new float[history];
+            float[] rightTop = new float[history];
+            float[] leftBottom = new float[history];
+            float[] rightBottom = new float[history];
+
+            int delay = 25;
+            int idx = 0;
+
             while (true)
             {
-                float lefttop = device.AudioMeterInformation.PeakValues[0];
-                float righttop = device.AudioMeterInformation.PeakValues[1];
-                float leftbottom = device.AudioMeterInformation.PeakValues[4];
-                float rightbottom = device.AudioMeterInformation.PeakValues[5];
+                leftTop[idx] = device.AudioMeterInformation.PeakValues[0];
+                rightTop[idx] = device.AudioMeterInformation.PeakValues[1];
+                leftBottom[idx] = device.AudioMeterInformation.PeakValues[4];
+                rightBottom[idx] = device.AudioMeterInformation.PeakValues[5];
+                idx = (idx + 1) % 100;
 
-                var tempone = lefttop * multiplier;
-                var temptwo = righttop * multiplier;
+                var tempone = leftTop[(idx + (history - delay)) % history] * multiplier;
+                var temptwo = rightTop[(idx + (history - delay)) % history] * multiplier;
 
-                var tempthree = leftbottom * multiplier;
-                var tempfour = rightbottom * multiplier;
+                var tempthree = leftBottom[(idx + (history - delay)) % history] * multiplier;
+                var tempfour = rightBottom[(idx + (history - delay)) % history] * multiplier;
 
                 var x = 75 - tempone + temptwo;
                 var y = 75 - tempone - temptwo;
@@ -111,14 +121,14 @@ namespace CanetisRadar
                     x = 140;
                 }
 
-                string infotext = "";
-                for (int i = 0; i < device.AudioMeterInformation.PeakValues.Count; i++)
-                {
-                    infotext += i + " -> " + device.AudioMeterInformation.PeakValues[i] + "\n";
-                }
-                label2.Invoke((MethodInvoker)delegate {
-                    label2.Text = infotext;
-                });
+                //string infotext = "";
+                //for (int i = 0; i < device.AudioMeterInformation.PeakValues.Count; i++)
+                //{
+                //    infotext += i + " -> " + device.AudioMeterInformation.PeakValues[i] + "\n";
+                //}
+                //label2.Invoke((MethodInvoker)delegate {
+                //    label2.Text = infotext;
+                //});
 
                 CreateRadar((int)x, (int)y);
 
@@ -130,8 +140,9 @@ namespace CanetisRadar
         {
             Bitmap radar = new Bitmap(150, 150);
             Graphics grp = Graphics.FromImage(radar);
-            grp.FillRectangle(Brushes.Black, 0, 0, radar.Width, radar.Height);
+            //grp.FillRectangle(Brushes.Black, 0, 0, radar.Width, radar.Height);
 
+            grp.FillRectangle(Brushes.Black, 70, 70, 10, 10);
             grp.FillRectangle(Brushes.Red, x - 5, y - 5, 10, 10);
 
             pictureBox1.Invoke((MethodInvoker)delegate {

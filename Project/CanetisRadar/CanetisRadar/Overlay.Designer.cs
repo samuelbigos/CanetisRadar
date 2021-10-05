@@ -38,7 +38,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pictureBox1.Location = new System.Drawing.Point(320, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(300, -400);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 0;
@@ -52,7 +52,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(165, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "CanetisRadar (by Samuel Tulach)";
+            //this.label1.Text = "CanetisRadar (by Samuel Tulach)";
             // 
             // label2
             // 
@@ -62,7 +62,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Loading...";
+            //this.label2.Text = "Loading...";
             // 
             // Overlay
             // 
